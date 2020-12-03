@@ -1,0 +1,52 @@
+body{
+	margin:0;
+	padding:0;
+	list-stylenone;
+	height: 100%;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+html{
+	height: 100%;
+}
+h1{
+color: black;
+}
+h7{
+color: black;
+}
+
+
+div{
+ height: 500px;
+ width : 50%;
+ color: black;
+background-color: whitesmoke;
+border-style: solid;
+opcity: 0.1;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #111;
+}
