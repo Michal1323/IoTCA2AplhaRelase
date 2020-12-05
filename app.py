@@ -1,12 +1,16 @@
 from flask import Flask, render_template
-import json
+import time, json, threading
+
+
+
 app = Flask(__name__)
 
 alive = 0
 data = {}
 
 
-        
+
+
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -21,6 +25,9 @@ def keep_alive():
     print(str(parsed_json))
     return str(parsed_json)
 
-if __name__ == "__main__":
 
-   app.run(host="127.0.0.1", port = 80)
+if __name__ == "__main__":
+    app.run(host="127.0.0.1", port = 80)
+
+
+
