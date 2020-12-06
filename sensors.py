@@ -1,7 +1,6 @@
 import RPi.GPIO as GPIO
 import time,threading
 
-
 from pubnub.callbacks import SubscribeCallback
 from pubnub.enums import PNStatusCategory, PNOperationType
 from pubnub.pnconfiguration import PNConfiguration
