@@ -1,34 +1,34 @@
 from pubnub.pnconfiguration import PNConfiguration
 from pubnub.pubnub import PubNub
 
-server_UUID = "631ec964-3407-11eb-adc1-0242ac120002"
-cipherKey = "myCipherKey"
-myChannel = "JLRSPY"
+server_UUID = "631ec964-3407-11eb-adc1-0242ac120002" //this is johns we need our own.
+cipherKey = "myCipherKey" // myCareTrackerKey ??
+myChannel = "IOTCA"
 
 ############################
 pnconfig = PNConfiguration()
 
-pnconfig.subscribe_key = 'your subscribe key'
-pnconfig.publish_key = 'your public key'
-pnconfig.secret_key = "your secret key"
-pnconfig.uuid = server_UUID
+pnconfig.subscribe_key = 'sub-c-019b1a54-34ce-11eb-99ef-fa1b309c1f97' // AMARAS SUSCRUBE KEY
+pnconfig.publish_key = 'pub-c-4b294d7e-8be1-4dff-9ba7-d18d80953efd' // AMARAS PUBLISH KEY
+pnconfig.secret_key = "your secret key" // VISIBLE ON AMARAS PUBNUB
+pnconfig.uuid = server_UUID //need to generate
 pnconfig.cipher_key = cipherKey
 pubnub = PubNub(pnconfig)
 
 
 
-def grantAccess(auth_key, read, write):
+def grant_access(auth_key, read, write):
     if read is True and write is True:
-        grantReadAndWriteAccess(auth_key)
+        grant_read_and_write_access(auth_key)
     elif read is True:
-        grantReadAccess(auth_key)
+        grant_read_access(auth_key)
     elif write is True:
-        grantWriteAccess(auth_key)
+        grant_write_access(auth_key)
     else:
-        revokeAccess(auth_key)
+        revoke_access(auth_key)
 
 
-def grantReadAndWriteAccess(auth_key):
+def grant_read_and_write_access(auth_key):
     v = pubnub.grant() \
         .read(True) \
         .write(True) \
@@ -43,7 +43,7 @@ def grantReadAndWriteAccess(auth_key):
     print("------------------------------------")
 
 
-def grantReadAccess(auth_key):
+def grant_read_access(auth_key):
     v = pubnub.grant() \
         .read(True) \
         .channels(myChannel) \
@@ -57,7 +57,7 @@ def grantReadAccess(auth_key):
     print("------------------------------------")
 
 
-def grantWriteAccess(auth_key):
+def grant_write_access(auth_key):
     v = pubnub.grant() \
         .write(True) \
         .channels(myChannel) \
@@ -71,7 +71,7 @@ def grantWriteAccess(auth_key):
     print("------------------------------------")
 
 
-def revokeAccess(auth_key):
+def revoke_access(auth_key):
     v = pubnub.revoke() \
         .channels(myChannel) \
         .auth_keys(auth_key) \
