@@ -6,12 +6,20 @@ body{
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center;
+	background-image: url("/static/img/background.jpg");
+
 }
 html{
 	height: 100%;
 }
 h1{
 color: black;
+border-style: groove;
+border-width: 2px;
+width: 50%;
+background-color:white;
+border-color: black;
+border-radius: 10px;
 }
 h7{
 color: black;
@@ -19,8 +27,8 @@ color: black;
 
 
 div{
- height: 500px;
- width : 50%;
+ height: 300px;
+ width : 35%;
  color: black;
 background-color: whitesmoke;
 border-style: solid;
@@ -32,7 +40,7 @@ ul {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #333;
+  background-color: black;
 }
 
 li {
@@ -49,4 +57,29 @@ li a {
 
 li a:hover {
   background-color: #111;
+}
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: black;
+  color: white;
+  text-align: center;
+  height: 100px;
+}
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 80%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
 }
