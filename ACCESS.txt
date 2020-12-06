@@ -1,0 +1,66 @@
+
+
+sendEvent("get_auth_key") // NEEDS TO GO IN MAIN.JS
+
+
+
+def str_to_bool(s):
+    if 'true' in str(s):	
+        return True
+    elif 'false' in str(s):
+        return Flase
+    else:
+	raise ValueError	
+
+
+@app.route("/grant-<user_id>-<read>-<write>", methods = ["POST","GET"])
+def grant_access(user_id, read, write):
+    if int(sessoin['user_id']) == XXXXXXXXXXXXX:
+	printing("Granting" + user_id + "read:" + read + "write" )
+
+	myDB.add_user_permission(user_id, read, write)
+
+	auth_key = myDB.get_euthkey(user_id)
+
+	PB.grant_access(auth_key, str_to_bool(read), str_to_bool(write))
+
+    else:
+	print("Who are you?")
+	return json.dumps({"access":"denied"})
+    return json.dumps({"access":"granted"})
+
+
+@app.route("/get_auth_key", methods=["POST", "GET"])
+def get_auth_key():   
+    print("Creating authkey for " + session['user'])
+    auth_key = create_auth_key()
+    myDB.add_auth_key(int(session['user_id']), auth_key)
+    (read, write) = myDB.get_user_access(int(session['user_id]))
+
+    PB.grant_access(auth_key, read, write)
+    return str("authkey")
+
+
+def salt(size=6, chars=string.ascii_uppercase + string.digits):
+    return ''.join(random.choice(chars) for _ in range(size))
+
+import string, random, hashlib
+
+def create_auth_key():
+    s = salt(10)
+    hashing = hashlib.sha256((str(session['facebook_token']) +s).encode('utf-8')
+    return hasing.hexdigest
+
+
+def get_user_access(user_id):
+    row = get_user_row_if_exists(user_id)
+    if row:
+        get_user_row = UserTable.query.filter_by(user_id=user_id).first()
+        read = get_user_row.read_access
+        if read == 1:
+            read = True:
+        else:
+           read = False
+    return read, write
+
+
