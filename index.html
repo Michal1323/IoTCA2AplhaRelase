@@ -6,7 +6,7 @@
 	<script>https://cdn.pubnub.com/sdk/javascript/pubnub.4.29.8.js</script>
 	<script>https://cdn.pubnub.com/sdk/javascript/pubnub.4.29.8.min.js</script>
 	<script src="static/js/main.js"></script>
-
+	<link rel ="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
 </head>
 <body onload = "keep_alive(); time();">
 <ul>
@@ -15,23 +15,24 @@
   <li><a href="#contact">Contact</a></li>
   <li><a href="#about">About</a></li>
 </ul>
-<center><a href = "#"><img src ="/static/img/logo.png"><a/></center>
+<center><img src ="/static/img/logo.png"><a/></center>
 
 
-	<link rel ="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+
 	<center><div class = "myInfo">
 		<h1> Your Information </h1>
 	
-		<a><li>Connection: <span id= "Connection_id">...</span></li></a>
-		<h3>Door:<span id="Motion_id"></span></h3>
-		<h4>Front Door</h4>
-		<h5>Back  Door</h5>
-		<h6Bedroom</h6>
-		<h7>Hall</h7>
+		<center><h2><a>Connection: <span id= "Connection_id">...</span></a></h3></center>
+		<br>
+		<h2>Status:<span id="Motion_id"></span></h2>
 
 		<label><input type="checkbox" id="buzzer" onclick="handleClick(this);">Buzzer On</label>
-
+	<center>	
+  	
 	</div></center>
-	
+
+	<div class="footer">
+ 		<p>	&copy;CareTraker</p>
+	</div>	
 			
 </body>
