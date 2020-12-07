@@ -16,6 +16,8 @@ data = {}
 
 pnconfig = PNConfiguration()
 
+pnconfig.cipher_key = 'mycypher'
+pnconfig.auth_key = 'IOTC-PI'
 pnconfig.subscribe_key = 'sub-c-019b1a54-34ce-11eb-99ef-fa1b309c1f97'
 pnconfig.publish_key = 'pub-c-4b294d7e-8be1-4dff-9ba7-d18d80953efd'
 pnconfig.uuid = '2e29f0b2-34de-11eb-adc1-0242ac120002'
@@ -43,16 +45,16 @@ def motionDetection():
     print("Sensors started")
     trigger = False
     while True:
+        time.sleep(0.5)
         if GPIO.input(PIR_pin):
             print("Motion detected")
             beep(4)
             trigger = True
-            publish(myChannel, {"motion" : "In the hallway"})
+            publish(myChannel, {"motion" : "Someone is at the backdoor"})
             time.sleep(1)
         elif trigger:
-            publish(myChannel, {"motion" : "Hallway is empty"})
+            publish(myChannel, {"motion" : "None is at the backdoor"})
             trigger = False
-
 
         if data["alarm"]:
             beep(2)
