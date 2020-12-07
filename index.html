@@ -3,36 +3,53 @@
 <head>
 	<meta charset = "UTF-8">
 
-	<script>https://cdn.pubnub.com/sdk/javascript/pubnub.4.29.8.js</script>
-	<script>https://cdn.pubnub.com/sdk/javascript/pubnub.4.29.8.min.js</script>
+	<link rel ="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+	<script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.29.8.js"></script>
+	<script src = "https://cdn.pubnub.com/sdk/javascript/pubnub.4.29.8.min.js"></script>
 	<script src="static/js/main.js"></script>
 	<link rel ="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
 </head>
 <body onload = "keep_alive(); time();">
-<ul>
+		<ul class="nav">
   <li><a class="active" href="#home">Home</a></li>
   <li><a href="#news">News</a></li>
   <li><a href="#contact">Contact</a></li>
   <li><a href="#about">About</a></li>
-</ul>
-<center><img src ="/static/img/logo.png"><a/></center>
-
-
-
-	<center><div class = "myInfo">
-		<h1> Your Information </h1>
+	</ul>
 	
-		<center><h2><a>Connection: <span id= "Connection_id">...</span></a></h3></center>
-		<br>
+	<center><a href = "#"><img src ="/static/img/logo.png"></a></center>
+		<center><div class = "myInfo">
+		<h1> Your Information </h1>
+		<h4>Connection: <span id= "Connection_id">...</span></h4>
 		<h2>Status:<span id="Motion_id"></span></h2>
-
 		<label><input type="checkbox" id="buzzer" onclick="handleClick(this);">Buzzer On</label>
-	<center>	
-  	
-	</div></center>
 
-	<div class="footer">
- 		<p>	&copy;CareTraker</p>
-	</div>	
-			
+	{% if user_id == "1139661149799278" %}
+	<h5>Online users</h5>
+	<center><ul>
+		{% for n in online_users["user_record"] %}
+		<center><li>
+			{{ n[0]}}<label><input type="checkbox" id="read-{{n[1]}}" {{n[2]}}>Read </label> <label><input type="checkbox"
+		id="write-{{n[1]}}" {{n[3]}}>Write </label><button type="button" id="access-{{n[1]}}" onclick =
+				"handleButtonClick(this)">Apply Changes</button>
+		</li></center>
+		{% endfor %}
+	</ul></center>
+	{% endif %}
+
+
+	</div></center>
+          <span>
+		{% for message in get_flashed_messages() %}
+		{{ message }}
+		{% endfor %}
+	</span>
+	<a href = '#' onclick = "logout();">Logout</a>
+
+</div>
+
+<div class="footer">
+  <p>&copy;Power Rangers</p>
+</div>
 </body>
+</html>
