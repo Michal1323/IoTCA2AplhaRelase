@@ -1,6 +1,7 @@
 import RPi.GPIO as GPIO
 import time, threading
 
+
 from pubnub.callbacks import SubscribeCallback
 from pubnub.enums import PNStatusCategory, PNOperationType
 from pubnub.pnconfiguration import PNConfiguration
@@ -19,13 +20,15 @@ pnconfig.cipher_key = 'mycypher'
 pnconfig.auth_key = 'IOTCA-PI'
 pnconfig.subscribe_key = 'sub-c-019b1a54-34ce-11eb-99ef-fa1b309c1f97'
 pnconfig.publish_key = 'pub-c-4b294d7e-8be1-4dff-9ba7-d18d80953efd'
-pnconfig.uuid = '65b1ac04-2517-11eb-adc1-0242ac120002'
+pnconfig.uuid = 'ec0f9ad2-37e5-11eb-adc1-0242ac120002'
 pubnub = PubNub(pnconfig)
+
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(PIR_pin, GPIO.IN)
 GPIO.setup(Buzzer_pin, GPIO.OUT)
+
 
 def beep(repeat):
     for i in range(0, repeat):
@@ -34,7 +37,8 @@ def beep(repeat):
             time.sleep(0.001)
             GPIO.output(Buzzer_pin, False)
             time.sleep(0.001)
-        time.sleep(0.02)    
+        time.sleep(0.02)
+
 
 def motionDetection():
     data["alarm"] = False
@@ -43,17 +47,16 @@ def motionDetection():
     while True:
         if GPIO.input(PIR_pin):
             print("Motion detected")
-            beep(4)
+            beep(1)
             trigger = True
-            publish(myChannel, {"motion" : "Mary is in the bedroom"})
+            publish(myChannel, {"motion": "Movement At the front door"})
             time.sleep(1)
         elif trigger:
-            publish(myChannel, {"motion" : "No motion detected in the bedroom"})
+            publish(myChannel, {"motion": "Noone is at the front door is empty"})
             trigger = False
+    if data["alarm"]:
+        beep(2)
 
-
-        if data["alarm"]:
-            beep(2)
 
 def publish(custom_channel, msg):
     pubnub.publish().channel(custom_channel).message(msg).pn_async(my_publish_callback)
@@ -103,7 +106,6 @@ class MySubscribeCallback(SubscribeCallback):
             print("Received: ", message.message)
             print(e)
             pass
-
 
     def handleEvent(self, msg):
         global data

@@ -1,20 +1,21 @@
 from pubnub.pnconfiguration import PNConfiguration
 from pubnub.pubnub import PubNub
 
-server_UUID = "631ec964-3407-11eb-adc1-0242ac120002" //this is johns we need our own.
-cipherKey = "myCipherKey" // myCareTrackerKey ??
+server_UUID = "ec0f9ad2-37e5-11eb-adc1-0242ac120002"   # this is our own.
+cipherKey = "mycypher"
 myChannel = "IOTCA"
 
-############################
-pnconfig = PNConfiguration()
 
-pnconfig.subscribe_key = 'sub-c-019b1a54-34ce-11eb-99ef-fa1b309c1f97' // AMARAS SUSCRUBE KEY
-pnconfig.publish_key = 'pub-c-4b294d7e-8be1-4dff-9ba7-d18d80953efd' // AMARAS PUBLISH KEY
-pnconfig.secret_key = "your secret key" // VISIBLE ON AMARAS PUBNUB
-pnconfig.uuid = server_UUID //need to generate
+############################
+
+
+pnconfig = PNConfiguration()
+pnconfig.subscribe_key = 'sub-c-019b1a54-34ce-11eb-99ef-fa1b309c1f97'  # AMARAS SUSCRUBE KEY
+pnconfig.publish_key = 'pub-c-4b294d7e-8be1-4dff-9ba7-d18d80953efd'  # AMARAS PUBLISH KEY
+pnconfig.secret_key = "sec-c-NTM0ZjZmYjItYjJhYy00NGNlLWIwYzctYzI4MzNjYjZmOWIz"  # VISIBLE ON AMARAS PUBNUB
+pnconfig.uuid = server_UUID  # need to generate
 pnconfig.cipher_key = cipherKey
 pubnub = PubNub(pnconfig)
-
 
 
 def grant_access(auth_key, read, write):
