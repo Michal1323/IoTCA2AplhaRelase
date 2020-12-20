@@ -15,12 +15,11 @@ sensorList = ["buzzer"]
 data = {}
 
 pnconfig = PNConfiguration()
-
 pnconfig.cipher_key = 'mycypher'
-pnconfig.auth_key = 'IOTCA-PI'
+pnconfig.auth_key = 'FrontDoorPi'
 pnconfig.subscribe_key = 'sub-c-019b1a54-34ce-11eb-99ef-fa1b309c1f97'
 pnconfig.publish_key = 'pub-c-4b294d7e-8be1-4dff-9ba7-d18d80953efd'
-pnconfig.uuid = 'ec0f9ad2-37e5-11eb-adc1-0242ac120002'
+pnconfig.uuid = 'Michal'
 pubnub = PubNub(pnconfig)
 
 
@@ -46,13 +45,13 @@ def motionDetection():
     trigger = False
     while True:
         if GPIO.input(PIR_pin):
-            print("Motion detected")
+            print("FrontDoor Detected")
             beep(1)
             trigger = True
-            publish(myChannel, {"motion": "Movement At the front door"})
+            publish(myChannel, {"FrontDoor": "Movement At the front door"})
             time.sleep(1)
         elif trigger:
-            publish(myChannel, {"motion": "Noone is at the front door is empty"})
+            publish(myChannel, {"FrontDoor": "No one is at the front door"})
             trigger = False
     if data["alarm"]:
         beep(2)

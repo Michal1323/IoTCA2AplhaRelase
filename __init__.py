@@ -4,7 +4,7 @@ from flask_dance.contrib.facebook import make_facebook_blueprint, facebook
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import redirect
 from functools import wraps
-from . import myDB,PB
+from . import myDB, PB
 import string, random, hashlib
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:CareTrackerPassword123@localhost/CareTrackerApp'
@@ -24,7 +24,10 @@ facebook_blueprint = make_facebook_blueprint(client_id=facebook_id, client_secre
 app.register_blueprint(facebook_blueprint, url_prefix='/facebook_login')
 
 
-PB.grant_access("IOTCA-PI", True, True)
+PB.grant_access("FrontDoorPi", True, True)
+PB.grant_access("Hallway", True, True)
+PB.grant_access("Bedroom", True, True)
+PB.grant_access("Backdoor-Pi", True, True)
 
 
 @app.route("/facebook_login")
@@ -61,7 +64,12 @@ def main():
     flash(session["user"])
     myDB.add_user_and_login(session['user'], int(session['user_id']))
     myDB.view_all()
-    return render_template("index.html", user_id=session['user_id'], online_users=myDB.get_all_logged_in_users())
+    return render_template("index.html", user_id=session['user_id'], online_users=myDB.get_all_logged_in_users(), )
+
+
+@app.route("/settings")
+def settings():
+    return render_template("settings.html")
 
 
 def clear_session():
@@ -107,6 +115,30 @@ def grant_access(user_id, read, write):
     return json.dumps({"access": "denied"})
 
 
+@app.route("/Hallway-<position>-<pos3>", methods=["POST", "GET"])
+def add_motion_hallway(position, pos3):
+    print("Hallway" + position)
+    myDB.add_sensor_and_motion(pos3)
+
+
+@app.route("/Frontdoor-<position>-<pos>", methods=["POST", "GET"])
+def add_motion_frontdoor(position, pos):
+    print("Frontdoor" + position)
+    myDB.add_sensor_and_motion(pos)
+
+
+@app.route("/Backdoor-<position>-<pos2>", methods=["POST", "GET"])
+def add_motion_backdoor(position, pos2):
+    print("Backdoor" + position)
+    myDB.add_sensor_and_motion(pos2)
+
+
+@app.route("/Bedroom-<position>-<pos4>", methods=["POST", "GET"])
+def add_motion_bedroom(position, pos4):
+    print("Bedroom" + position)
+    myDB.add_sensor_and_motion(pos4)
+
+
 @app.route("/get_auth_key", methods=["POST", "GET"])
 def get_auth_key():
     print("Creating authkey for " + session['user'])
@@ -143,3 +175,6 @@ def keep_alive():
 
 if __name__ == "__main__":
     app.run()
+#1.	Capture the pubnub message in pubnub.addlistener - look at the message function here
+#2.	Send this message to an endpoint on your Flask server in init.py by calling sendEvent. See handleButtonClick() in main.js for how to do this
+#3.	Create the endpoint in ini.py where you call the database functions to save the data sent over pubnub

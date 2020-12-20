@@ -7,46 +7,55 @@
 	<script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.29.8.js"></script>
 	<script src = "https://cdn.pubnub.com/sdk/javascript/pubnub.4.29.8.min.js"></script>
 	<script src="static/js/main.js"></script>
-	<link rel ="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
 </head>
 <body onload = "keep_alive(); time();">
-		<ul class="nav">
-  <li><a class="active" href="#home">Home</a></li>
-  <li><a href="#news">News</a></li>
-  <li><a href="#contact">Contact</a></li>
-  <li><a href="#about">About</a></li>
+	<ul class="nav">
+    <li><a class="active" href="{{ url_for('main')}}">Home</a></li>
+ <li><a  href="{{ url_for('settings')}}">Settings</a></li>
+        <li style="float:right"><a href = '/' onclick = "logout();">Logout</a></li>
 	</ul>
-	
-	<center><a href = "#"><img src ="/static/img/logo.png"></a></center>
+
+	<center><img src ="/static/img/logo.png" style="width:250px;height:250px;" ></center>
 		<center><div class = "myInfo">
-		<h1> Your Information </h1>
-		<h4>Connection: <span id= "Connection_id">...</span></h4>
-		<h2>Status:<span id="Motion_id"></span></h2>
-		<label><input type="checkbox" id="buzzer" onclick="handleClick(this);">Buzzer On</label>
+		<h1> Clients Motion </h1>
 
-	{% if user_id == "1139661149799278" %}
-	<h5>Online users</h5>
-	<center><ul>
-		{% for n in online_users["user_record"] %}
-		<center><li>
-			{{ n[0]}}<label><input type="checkbox" id="read-{{n[1]}}" {{n[2]}}>Read </label> <label><input type="checkbox"
-		id="write-{{n[1]}}" {{n[3]}}>Write </label><button type="button" id="access-{{n[1]}}" onclick =
-				"handleButtonClick(this)">Apply Changes</button>
-		</li></center>
-		{% endfor %}
-	</ul></center>
-	{% endif %}
-
-
-	</div></center>
-          <span>
+<table id="t01">
+  <tr>
+    <td>User</td>
+    <td><span>
 		{% for message in get_flashed_messages() %}
 		{{ message }}
 		{% endfor %}
-	</span>
-	<a href = '#' onclick = "logout();">Logout</a>
-
+	    </span>
+</td>
+  </tr>
+  <tr>
+    <td>Status</td>
+    <td><span id="Motion_id"></span></td>
+  </tr>
+  <tr>
+    <td>Front Door</td>
+    <td><span id="Frontdoor_id"></span></td>
+  </tr>
+<tr>
+    <td>Back Door</td>
+    <td><span id="Backdoor_id"></span></td>
+  </tr>
+<tr>
+    <td>Hallway</td>
+    <td><span id="Hallway_id"></span></td>
+  </tr>
+<tr>
+    <td>Bedroom</td>
+    <td><span id="Bedroom_id"></span></td>
+  </tr>
+</table>
+	</div></center>
+  
+<br>
+    <br>
 </div>
+
 
 <div class="footer">
   <p>&copy;Power Rangers</p>

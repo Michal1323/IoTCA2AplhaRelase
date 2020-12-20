@@ -48,7 +48,7 @@ def add_user_and_login(name, user_id):
         db.session().commit
     else:
         print("Adding user" + name)
-        new_user = UserTable(name, user_id, None, 1)
+        new_user = UserTable(name, user_id, None, 1, 1, 1)
         db.session.add(new_user)
         db.session.commit()
     print("User" + name + "login added")
@@ -138,6 +138,39 @@ def get_user_access(user_id):
             write = False
     return read, write
 
+
+class SensorTable(db.Model):
+    __tablename__ = "sensors"
+    id = db.Column(db.Integer, primary_key=True)
+    position = db.Column(db.String(4096))
+    timestamp = db.Column(db.Integer)
+    status = db.Column(db.Integer)
+
+    def __init__(self, position, status):
+        self.position = position
+        self.status = status
+
+
+def get_sensor_row_if_exists(position):
+    get_sensor_row = SensorTable.query.filter_by(position=position).first()
+    if get_sensor_row != None:
+        return get_sensor_row
+    else:
+        print("User does not exist")
+        return False
+
+
+def add_sensor_and_motion(position):
+    row = get_sensor_row_if_exists(position)
+    if row != False:
+        row.status = 1
+        db.session().commit
+    else:
+        print("Adding sensor" + position)
+        new_sensor = SensorTable(position, 1)
+        db.session.add(new_sensor)
+        db.session.commit()
+    print("Sensor" + position + "login added")
 
 
 

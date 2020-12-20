@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+	<meta charset = "UTF-8">
+
+	<link rel ="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+	<script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.29.8.js"></script>
+	<script src = "https://cdn.pubnub.com/sdk/javascript/pubnub.4.29.8.min.js"></script>
+	<script src="static/js/main.js"></script>
+</head>
+<body onload = "keep_alive(); time();">
+		<ul class="nav">
+  <li><a class="active" href="{{ url_for('main')}}">Home</a></li>
+  <li><a  href="{{ url_for('settings')}}">Settings</a></li>
+        <li style="float:right"><a href = '/' onclick = "logout();">Logout</a></li>
+	</ul>
+	
+	<center><img src ="/static/img/logo.png"></a></center>
+		<center><div class = "myInfo">
+		<h1> Settings </h1>
+		<h4>Connection: <span id= "Connection_id">...</span></h4>
+		<h4><label><input type="checkbox" id="buzzer" onclick="handleClick(this);">Buzzer On</label><h4>
+
+{% if user_id == "1139661149799278" or user_id == "2128999500570693"  %}
+	<h5>Online users</h5>
+	<center><ul>
+		{% for n in online_users["user_record"] %}
+		<center><li>
+			{{ n[0]}}<label><input type="checkbox" id="read-{{n[1]}}" {{n[2]}}>Read </label> <label><input type="checkbox"
+		id="write-{{n[1]}}" {{n[3]}}>Write </label><button type="button" id="access-{{n[1]}}" onclick =
+				"handleButtonClick(this)">Apply Changes</button>
+		</li></center>
+		{% endfor %}
+	</ul></center>
+	{% endif %}
+
+
+	</div></center>
+          <span>
+		{% for message in get_flashed_messages() %}
+		{{ message }}
+		{% endfor %}
+	</span>
+
+</div>
+
+<div class="footer">
+  <p>&copy;Power Rangers</p>
+</div>
+</body>
+</html>
